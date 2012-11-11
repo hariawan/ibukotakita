@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hariawan App | IbuKotaKita</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="content-language" content="en-US" />
+        <meta charset=utf-8>
+        <meta name="description" content="Kuis anak SD, seharusnya. Masih inget? Cobain!" />
+        <meta name="author" content="Hariawan Bangun Safutra" />
+        <meta name="keywords" content="Hariawan, hariawanapp, Hariawan App, Ide, Idea, Creative, Creativity, Be Creative, IbuKotaKita, ibukotakita" />
+        <meta name="revised" content="IbuKotaKita, 09/07/2012" />
+        <!-- <link rel="Shortcut Icon" href="../../img/MK_icon.ico"> -->
+        <link rel=stylesheet href="http://fonts.googleapis.com/css?family=Istok+Web:400,700">
+        <link rel=stylesheet href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono">
+        <link rel=stylesheet href='http://fonts.googleapis.com/css?family=Boogaloo'>
+        <link rel=stylesheet href="style.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript">
+            $.getJSON("https://search.twitter.com/search.json?callback=?&q=33%20ibu%20kota%20yang%20berhasil%20kejawab%20%23IbuKotaKita",
+            function(data) {
+                for (i=0; i<5; i++) {
+                    var created_date = data.results[i].created_at;
+                    var date_formatted = "";
+
+                    /* COPIED FROM http://twitter.com/javascripts/widgets/widget.js */
+                    var rightNow = new Date();
+                    var then = new Date(created_date);
+
+                    var diff = rightNow - then;
+
+                    var second = 1000,
+                        minute = second * 60,
+                        hour = minute * 60,
+                        day = hour * 24,
+                        week = day * 7;
+
+                    if (isNaN(diff) || diff < 0) {
+                        date_formatted = ""; // return blank string if unknown
+                    } else if (diff < second * 2) {
+                        // within 2 seconds
+                        date_formatted = "right now";
+                    } else if (diff < minute) {
+                        date_formatted = Math.floor(diff / second) + " seconds ago";
+                    } else if (diff < minute * 2) {
+                        date_formatted = "about 1 minute ago";
+                    } else if (diff < hour) {
+                        date_formatted = Math.floor(diff / minute) + " minutes ago";
+                    } else if (diff < hour * 2) {
+                        date_formatted = "about 1 hour ago";
+                    } else if (diff < day) {
+                        date_formatted =  Math.floor(diff / hour) + " hours ago";
+                    } else if (diff > day && diff < day * 2) {
+                        date_formatted = "yesterday";
+                    } else if (diff < day * 365) {
+                        date_formatted = Math.floor(diff / day) + " days ago";
+                    } else {
+                        date_formatted = "over a year ago";
+                    }
+                    /* END COPIED FROM http://twitter.com/javascripts/widgets/widget.js */
+
+                    $("#participants").append("<a href=\"https://twitter.com/"+data.results[i].from_user+"/status/"+data.results[i].id_str+"\" title=\""+date_formatted+" \" target=\"_blank\"><img id=\"img-participants\" src=\"https://api.twitter.com/1/users/profile_image/"+data.results[i].from_user+"?size=mini\" /></a>&nbsp");
+                    if (i === 4) {
+                     $("#participants").append("<a href=\"https://twitter.com/#!/search/%23IbuKotaKita\" target=\"_blank\"> more </a>");
+                    }
+                }
+            });
+        </script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-21754707-11']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <span class=logo>Garuda</span><span class=peta>Indonesia</span>
+            <p>#IbuKotaKita</p>
+        </header>
+        <article id="quiz_wrapper">
+            <noscript>Aktifkan javascript pada browser anda terlebih dahulu.</noscript>
+        </article>
+		
+        <footer>
+            <div class=clearfix>
+                <a href="mailto:sponsors@hariawan.com?subject=IbuKotaKita Sponsorship" style="float: left; margin-left: 20px; text-align: left;">Your logo here</a>
+                <small>Inspired by <a href="http://www.thehtml5quiz.com/" target="_blank">HTML5 Elements Quiz</a></small>
+                <abbr id="participants" title="#IbuKotaKita players"></abbr>
+            </div>
+        </footer>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="js/kuis.js"></script>
+        <script src="js/rollinglinks.js"></script>
+    </body>
+</html>
